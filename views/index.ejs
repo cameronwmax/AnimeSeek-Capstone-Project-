@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main class="main">
+      <div class="container">
+        <div class="heading">
+          <h1 class="primary-heading">AnimeSeek</h1>
+          <h2 class="heading-secondary">Your Gateway to the Best in Anime</h2>
+        </div>
+
+        <div class="content">
+          <% if (!locals.shows) { %>
+          <div class="start-page">
+            <div class="content-text-container">
+              <p class="content-text">
+                At AnimeSeek, we’re passionate about bringing you closer to the anime you love.
+                Whether you’re a seasoned otaku or just starting your anime journey, our goal is to
+                make discovering new shows and hidden gems as seamless as possible.
+              </p>
+              <div class="content-end-text">Find your next anime now!</div>
+            </div>
+            <a href="<%= randShow.url %>" class="show-card-link" target="_blank">
+              <div class="show-card">
+                <div class="card-img-containter">
+                  <img
+                    class="card-img"
+                    src="<%= randShow.image %>"
+                    alt="<%= randShow.title %> cover art"
+                  />
+                </div>
+                <div class="heading-container">
+                  <h3 class="heading-tertiary"><%= randShow.title %></h3>
+                </div>
+              </div>
+            </a>
+          </div>
+          <% } else { %>
+          <div class="content-card-container">
+            <% shows.forEach(show => { %>
+            <a href="<%= show.url %>" class="show-card-link" target="_blank">
+              <div class="show-card">
+                <div class="card-img-containter">
+                  <img class="card-img" src="<%= show.image %>" alt="<%= show.title %> cover art" />
+                </div>
+                <div class="heading-container">
+                  <h3 class="heading-tertiary"><%= show.title %></h3>
+                </div>
+              </div>
+            </a>
+            <% }) %>
+          </div>
+
+          <div class="pag-container">
+            <% if (info.curPage > 1) { %>
+            <form action="/prev" method="post">
+              <div class="pag-btn pag__btn--prev">
+                <input type="hidden" name="info" value="<%= JSON.stringify(info) %>" />
+                <input type="hidden" name="dir" value="<%= info.curPage - 1 %>" />
+                <input type="submit" value="<%= info.curPage - 1 %>" class="pag-submit p" />
+              </div>
+            </form>
+            <% } %>
+
+            <a href="/" class="home-btn">
+              <div class="home-btn-container">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="home-icon"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                  />
+                </svg>
+              </div>
+            </a>
+
+            <% if (info.curPage < info.numPages) { %>
+
+            <form action="/next" method="post" class="pag-btn pag__btn--next">
+              <div>
+                <input type="hidden" name="info" value="<%= JSON.stringify(info) %>" />
+                <input type="hidden" name="dir" value="<%= info.curPage + 1 %>" />
+                <input type="submit" value="<%= info.curPage + 1 %>" class="pag-submit" />
+              </div>
+            </form>
+            <% } %>
+          </div>
+          <% } %>
+        </div>
+
+        <form action="/" method="post" class="search">
+          <input
+            type="text"
+            name="show"
+            class="search__field"
+            placeholder="Search"
+            autocomplete="off"
+            required
+          />
+          <input type="submit" value="Go" class="btn btn--search" />
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
