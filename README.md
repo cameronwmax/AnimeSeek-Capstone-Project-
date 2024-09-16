@@ -3,5 +3,5 @@ For my capstone project in section 29 of "The Complete 2024 Web Development Boot
 
 ## How To Run:
 In your terminal enter:
->npm i
->node index.js
+-npm i
+-node index.js
